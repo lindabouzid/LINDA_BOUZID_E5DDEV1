@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  php:
+    build: './php/'
+    image: 'php-image:1.0'
+    networks:
+      - backend
+    volumes:
+      - ./samplephpwebsite/:/var/www/samplephpwebsite/
+  apache:
+    build: './apache/'
+    image: 'apache-image:1.0'
+    depends_on:
+      - php
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "8085:80"
+    volumes:
+      - ./samplephpwebsite:/var/www/samplephpwebsite/
+
+networks:
+  frontend:
+  backend:
